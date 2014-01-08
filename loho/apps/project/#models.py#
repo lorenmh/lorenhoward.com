@@ -1,0 +1,88 @@
+#PROJECT MODELS
+
+cfrom django.db import models
+
+#for images
+from PIL import Image
+import os
+
+#removes non-alphanumerics and puts in dashes for spaces
+def urlFriendly(string):
+    string_alnum_and_spaces = ''.join(char for char in string if char.isalnum() or char == ' ')
+    return (str.join('-', [s for s in string_alnum_and_spaces.split(' ') if s]))
+
+class LargeProject(models.Model):
+    title = models.CharField(max_length = 128)
+    url_name = models.SlugField()
+    brief_description = models.TextField()
+    description = models.TextField()
+
+    def path_and_rename(path, name):
+        def wrapper(instance, filename):
+            ext = filename.split('.')[-1]
+            project_name = urlFriendly(instance.title)
+            new_name = project_name + '-main-image'
+            new_path = '/' + project_name + '/'
+            filename = '{}.{}'.format(new_name, ext)
+            return os.path.join(path + new_path, filename)
+        return wrapper
+
+    main_image = models.ImageField(blank = True, null = True, upload_to = path_and_rename('project/main', url_name))
+
+    class Meta:
+        abstract = False
+
+class SmallProject(models.Model):
+    title = models.CharField(max_length = 128)
+    url_name = models.SlugField()
+    brief_description = models.TextField()
+    description = models.TextField()
+
+    def path_and_rename(path, name):
+        def wrapper(instance, filename):
+            ext = filename.split('.')[-1]
+            project_name = urlFriendly(instance.title)
+            new_name = project_name + '-main-image'
+            new_path = '/' + project_name + '/'
+            filename = '{}.{}'.format(new_name, ext)
+            return os.path.join(path + new_path, filename)
+        return wrapper
+
+    main_image = models.ImageField(blank = True, null = True, upload_to = path_and_rename('project/main', url_name))
+
+
+    class Meta:
+        abstract = False
+
+class LargeProject_image(models.Model):
+    project = models.ForeignKey('LargeProject')
+
+    #IMAGE FIELD RENAME FUNCTION
+    def path_and_rename(path, name):
+        def wrapper(instance, filename):
+            ext = filename.split('.')[-1]
+            project_name = urlFriendly(LargeProject.objects.get(pk=instance.project.pk).url_name)
+            new_name = project_name + '-image'
+            new_path = '/' + project_name + '/'
+            filename = '{}.{}'.format(new_name, ext)
+            return os.path.join(path + new_path, filename)
+        return wrapper
+#IMAGE FIELD
+    image = models.ImageField(upload_to=path_and_rename('project/gallery', 'image'))
+
+
+class SmallProject_image(models.Model):
+    project = models.ForeignKey('SmallProject')
+
+    #IMAGE FIELD RENAME FUNCTION
+    def path_and_rename(path, name):
+        def wrapper(instance, filename):
+            ext = filename.split('.')[-1]
+            project_name = urlFriendly(SmallProject.objects.get(pk=instance.project.pk).url_name)
+            new_name = project_name + '-image'
+            new_path = '/' + project_name + '/'
+            filename = '{}.{}'.format(new_name, ext)
+            return os.path.join(path + new_path, filename)
+        return wrapper
+#IMAGE FIELD
+    image = models.ImageField(upload_to=path_and_rename('project/gallery', 'image'))

@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% include 'blog/component/page_title.html' %}
+
+{% for blog in blog_list %}
+    {% include 'blog/component/list_blog.html' %}
+{% include 'blog/component/
+{% endfor %}
+
+{% endblock %}

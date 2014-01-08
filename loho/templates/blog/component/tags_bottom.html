@@ -1,0 +1,5 @@
+<div class="tag_box tags_bottom">
+    {% for tag in blog.tags.all %}
+    <div class="blog_tag_container"><a href="/tag/{{ tag.url }}" class="blog_tag">{{ tag.name }}</a></div>
+    {% endfor %}
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  {% include 'base/assets.html' %}
+</head>
+
+<body>
+  <div class="page">
+    {% include 'base/header.html' %}
+	<div class="wrapper">
+    {% include 'base/navigation.html' %}
+    <div class="top_content_spacer"></div>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="bottom_content_spacer"></div>
+    {% include 'base/footer.html' %}
+	</div>
+  </div>
+</body>
+
+</html>

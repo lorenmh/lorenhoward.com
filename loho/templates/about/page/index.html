@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks static %}
+
+{% block content %}{% load sekizai_tags %}{% addtoblock "description" %}<title>About Loren</title><meta name="description" content="Loren Howard; Web Developer, Designer, and maker of pretty things that sparkle.">{% endaddtoblock %}
+<div class="about_me text">
+<h2 class="no_top_margin">Hello</h2>
+<p>
+    I'm Loren, I create websites.<br/>
+    <a href="#" onclick="window.open('https://docs.google.com/document/d/1ELscbYVwp6nug6Tb3WbOmkIDGlHGytQO13l-OyggoDY/pub', 'My Resume', 700, 900 );">Here's my Resume</a>.<br/>
+    I am skilled with:
+    <ul class="no_top_margin">
+        <li class="no_top_margin">JavaScript</li>
+        <li>jQuery / jQuery UI</li>
+        <li>Django</li>
+        <li>Python</li>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>Java</li>
+        <li>RESTful architecture</li>
+        <li>Asynchronous requests</li>
+        <li>Responsive web design</li>
+        <li>Browser compliance (IE, Firefox, Safari, Chrome)</li>
+    </ul>
+    <br/>
+    Feel free to <a href="mailto:hello@lorenhoward.com">email me</a>, or contact me via the form below.
+</p>
+</div>
+
+<div class="contact_list"></div>
+<h3>Contact Me</h3>
+<form id="contact_form">{% csrf_token %}
+{% for field in contact_form %}
+    <div class="field_wrap">
+        {# the django template renderer doesnt like spaces so this will be ugly #}
+
+        {% with field.name|capfirst as field_name %}
+        {% with "placeholder:"|add:field_name|add:':' as ph %}
+        
+        {% if field.name != 'text' %}
+            {{ field|attr:"class:form_field floatlabel"|attr:ph }}
+        {% else %}
+            {{ field|attr:"class:form_field" }}
+        {% endif %}
+
+        {% endwith %}
+        {% endwith %}
+    </div>
+{% endfor %}
+<input id="form_submit" type="button" value="Submit" /><div class="form_loading hide"></div>
+</form>
+
+
+<script type="text/javascript" src="{% static 'base/js/floatlabels.js' %}">
+</script>
+
+<style type="text/css">
+.content{
+    position:relative;
+}
+
+.rec{
+    width:200px;
+    height:10px;
+    /*background-color:rgba(200,100,100,.4);*/
+    margin-bottom:2px;
+    position:absolute;
+    overflow:hidden;
+    top: 98px;
+    left: 20px;
+}
+
+#container{
+    position:relative;
+    width:220px;
+    height:220px;
+    float:right;
+    background-color: rgb(45,65,80);
+    border-radius: 50%;
+}
+
+#mobile_headshot{
+    background-image: url('http://lorenhoward.com/static/base/img/headshot.gif');
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-position: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+</style>
+
+
+
+{% endblock %}

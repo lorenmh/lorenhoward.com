@@ -1,0 +1,19 @@
+{# Assumes that there is an item being passed #}
+{% load classname %}
+
+{% with item|classname as classname %}
+
+{% if classname == 'Blog' %}
+{% with item as blog %}
+{% include 'blog/component/blog_list.html' %}
+{% endwith %}
+
+{% elif classname == 'Project' %}
+{% with item as project %}
+{% include 'project/component/project_list.html' %}
+{% endwith %}
+{% endif %}
+
+{% endwith %}
+
+{# commenting this out for now #}

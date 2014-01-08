@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+{% block content %}{% load sekizai_tags %}{% addtoblock "description" %}<title>Loren's Projects</title><meta name="description" content="This is the official website of Loren Howard; Web Developer, Designer, and maker of pretty things that sparkle.">{% endaddtoblock %}
+
+{#{% include 'project/component/page_title.html' %}#}
+
+{% for project in project_list %}
+    {% include 'project/component/project_list.html' %}
+    {% if not forloop.last %}
+    	<hr class='index_divider'>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

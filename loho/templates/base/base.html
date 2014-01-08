@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  {% include 'base/assets.html' %}
+
+  {# SEKIZAI START #}
+  {% load sekizai_tags %}
+  {% render_block "description" %}
+  {# SEKIZAI END #}
+</head>
+
+<body>
+  <div class="page">
+
+{% include 'base/header.html' %}
+
+    <div class="wrapper">
+
+{% include 'base/navigation.html' %}
+
+      <div class="top_content_spacer"></div>
+
+      <div class="spacer"></div>
+      
+      <div class="content">
+
+{% block content %}{% endblock %}
+
+      </div>
+      <div class="bottom_content_spacer"></div>
+
+{% include 'base/footer.html' %}
+
+    </div>
+  </div>
+</body>
+
+</html>

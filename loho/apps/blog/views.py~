@@ -1,0 +1,16 @@
+# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import get_template
+from django.template.context import RequestContext
+
+from apps.blog.models import Blog
+
+context = {'current_page':'blog',}
+
+def blog_index(request):
+    return render(request,'blog_index.html',context)
+
+def blog_main(request, blog_url_name):
+    blog = get_object_or_404(Blog, url_name=blog_url_name)
+    context += {'blog':blog}
+    return render(request, 'blog_index.html', context)

@@ -1,0 +1,12 @@
+{% load truncatewords_html_readmore %}
+<div class="list_blog_container">
+{% include 'blog/component/blog_title_box.html' %}
+<div class="list_blog_text">
+    {% if blog.teaser %}
+        {{ blog.teaser|safe }}
+    {% else %}
+        {{ blog.text|safe|truncatewords_html:200 }}
+    {% endif %}
+        <span class="readmore">&nbsp;<a href="/blog/{{blog.url}}">Read more</a>.</span></div>
+{% include 'blog/component/tags_bottom.html' %}
+</div>

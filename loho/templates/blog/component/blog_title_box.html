@@ -1,0 +1,10 @@
+<div class="blog_title_box">
+    <div class="blog_title_box_top">
+        <a class="blog_link" href="/blog/{{ blog.url }}"><h2 class="blog_title">{{ blog.title }}</h2>
+        </a>
+        <div class="blog_timestamp">{{ blog.timestamp|date:"F d Y" }}</div>
+    </div>
+
+    {% include 'blog/component/tags_top.html' %}
+    
+</div>

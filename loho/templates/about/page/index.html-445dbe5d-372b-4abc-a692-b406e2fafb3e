@@ -1,0 +1,228 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks static %}
+
+{% block content %}
+<div id="container"></div>
+<div class="about_me text">
+<h2 class="no_top_margin">Hello</h2>
+<p>
+    I'm Loren, I create websites.<br/>
+    <a href="https://docs.google.com/document/d/1ELscbYVwp6nug6Tb3WbOmkIDGlHGytQO13l-OyggoDY/edit?usp=sharing">Here's my Resume</a>.
+</p>
+</div>
+
+<div class="contact_list"></div>
+<h3>Contact Me</h3>
+<form id="contact_form">{% csrf_token %}
+{% for field in contact_form %}
+    <div class="field_wrap">
+        {# the django template renderer doesnt like spaces so this will be ugly #}
+
+        {% with field.name|capfirst as field_name %}
+        {% with "placeholder:"|add:field_name as ph %}
+        
+        {% if field.name != 'text' %}
+            {{ field|attr:"class:form_field floatlabel"|attr:ph }}
+        {% else %}
+            {{ field|attr:"class:form_field" }}
+        {% endif %}
+
+        {% endwith %}
+        {% endwith %}
+    </div>
+{% endfor %}
+<input id="form_submit" type="button" value="Submit" /><div class="form_loading hide"></div>
+</form>
+
+<script type="text/javascript" src="{% static 'base/js/floatlabels.js' %}">
+</script>
+
+<style type="text/css">
+.content{
+    position:relative;
+}
+
+.rec{
+    width:200px;
+    height:10px;
+    /*background-color:rgba(200,100,100,.4);*/
+    margin-bottom:2px;
+    position:absolute;
+    overflow:hidden;
+    top: 88px;
+    left: 10px;
+}
+
+#container{
+    position:relative;
+    width:200px;
+    height:200px;
+    float:right;
+    background-color: rgb(45,65,80);
+    border-radius: 50%;
+}
+
+
+</style>
+
+<script>
+$(document).ready(function(){
+    setTimeout( function(){ go();} , 1000);
+});
+/*ROTARY ANIMATOR CREATED BY LOREN HOWARD 2013*/
+var num_rec = 40; //number of rectangles
+
+var set_rec_height = 25;
+var set_rec_width = 180;
+
+var ease_var = 28; //pick a number between 0 and 31
+//ease_var = Math.floor(Math.random() * 32); //uncomment for random easing
+
+var container = $('#container');
+var full_circle = false; //set this to true or false and see what happens
+
+//create the rectangles
+var odd = true;
+
+var img_url = "http://lorenhoward.com/static/base/img/headshot.gif";
+
+for (var count = num_rec; count > 0; count--){
+    container.append('<div class="rec" id="rec_' + count + '"></div>');
+}
+
+//start constant is the distance the rectangles rotate before they start 'separating'
+var start_constant = 360;
+//final time is the duration of the entire animation from start to finish
+var final_time = 1000;
+
+$('.rec').css({'width':set_rec_width + 'px', 'height':set_rec_height + 'px'});
+
+//angle variance is the difference between the final angle positions of the rectangles
+var angle_variance = 360 / (2 * num_rec); //for transform 50%;
+var edge_angle_variance = 360 / num_rec; //for transform on edge (100% +)
+
+var transform = 50;
+
+if (full_circle){
+    transform = 100;
+    angle_variance = edge_angle_variance;
+}
+
+//final angle is the largest angle (last block will have the largest angle).
+var final_angle = 360 - angle_variance;
+
+$('<img src="' + img_url + '"/>').load(function(){
+    var img_width = this.width;
+    var img_height = this.height;
+    
+    var rec_height = $('.rec').height();
+    var rec_width = $('.rec').width();
+    
+    var top_var = -((img_height / 2) - (rec_height / 2));
+    var left_var = -((img_width / 2) - (rec_width / 2));
+    var edge_left_var = -((img_width / 2) - rec_width);
+    
+    if (full_circle)
+        left_var = edge_left_var;
+    
+    $("html").append('<style type="text/css">.rec:before{content: "";position: absolute;width: ' + img_width + 'px;height: ' + img_height + 'px;top:' + top_var + 'px;left: ' + left_var + 'px;z-index: -1;background: url("' + img_url + '") 0 0 no-repeat;</style>');
+});
+
+
+var ease_vars = ['linear','swing','easeInSine','easeOutSine','easeInOutSine','easeInQuad','easeOutQuad','easeInOutQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeInQuart','easeOutQuart','easeInOutQuart','easeInQuint','easeOutQuint','easeInOutQuint','easeInExpo','easeOutExpo','easeInOutExpo','easeInCirc','easeOutCirc','easeInOutCirc','easeInBack','easeOutBack','easeInOutBack','easeInElastic','easeOutElastic','easeInOutElastic','easeInBounce','easeOutBounce','easeInOutBounce'];
+
+for(var count = 0; count < num_rec; count++){
+        var curr_rec = "#rec_" + (count + 1); //current rectangle;
+        
+        var new_angle = start_constant + (count * angle_variance); //new angle
+        var opp_angle = (-new_angle) + 'deg'; //oposite of the new angle
+        
+        //this adds the style to move the background image contrary to the final resting spot of the div
+        //doing this puts the background image in the correct alignment
+        $('html').append('<style type="text/css">' + curr_rec + ':before{-webkit-transform:rotate(' + opp_angle + ');-moz-transform: rotate(' + opp_angle + ');-ms-transform: rotate(' + opp_angle + ');-o-transform: rotate(' + opp_angle + ');transform: rotate(' + opp_angle + ');</style>');
+}
+
+rotate($('#rec_1'), 0, 0, 'linear', 0);
+
+//this sets the individual data for each rectangle
+function go(){
+    for(var count = 0; count < num_rec; count++){
+        var curr_rec = "#rec_" + (count + 1); //current rectangle;
+        
+        var new_angle = start_constant + (count * angle_variance); //new angle
+        
+        var duration = (new_angle / final_angle) * final_time; //duration
+        rotate($(curr_rec), new_angle, duration, ease_vars[ease_var], transform);
+    }
+}
+
+//rotates the rectangles
+function rotate(obj,newAng, dur, ease, transform){
+    obj.animate({degree : newAng},{
+        duration: dur,
+        step: function(now){
+            obj.css({transform: 'rotate(' + now + 'deg)',
+            'transform-origin': transform +'% 50%',
+            '-moz-transform-origin': transform +'% 50%'});
+        },
+        easing: ease
+    });
+}
+
+</script>
+
+<script>
+
+var load = $('.form_loading');
+
+$('input#form_submit').click( function() {
+    load.toggleClass('hide');
+
+    $.post( '/contact/' , $('form#contact_form').serialize(), null, 'json')
+        .done(function(data){
+            clearForm();
+            load.toggleClass('hide');
+            updateList();
+        })
+        .fail(function(data){
+            load.toggleClass('hide');
+            error(data.responseJSON);
+        })
+
+} );
+
+function error(result){
+    clearError();
+
+    for (key in result){
+        current = $('#id_'+ key );
+        current.addClass("field_error");
+        label = $('label[for=id_' + key + ']');
+        label.html(result[key])
+    }
+
+    $('input.floatlabel').floatlabel();
+}
+
+function clearForm(){
+    $('.form_field').val(undefined);
+    clearError();
+
+}
+
+function clearError(){
+    $('.form_field').removeClass('field_error');
+    
+    objects = $('input.floatlabel');
+
+    for (i = 0; i < objects.length; i++){
+        item = $(objects[i]);
+        name = $(item).attr('name');
+        original = $(item).attr('placeholder');
+        label = $('label[for=id_' + name + ']');
+        label.html(original);
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+{% block content %}{% load sekizai_tags %}{% addtoblock "description" %}<title>Tagged {{ tag.name }}</title><meta name="description" content="This is the official website of Loren Howard; Web Developer, Designer, and maker of pretty things that sparkle.">{% endaddtoblock %}
+<h2 class="no_margin_top">All items tagged with {{tag.name}}:</h2>
+{% for item in generic_list %}
+    {% include 'tag/component/generic_list.html' %}
+    {% if not forloop.last %}
+        <hr class='index_divider'>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

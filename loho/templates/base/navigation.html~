@@ -1,0 +1,9 @@
+<div class="nav">
+		<div class="nav_menu">
+			<a href="/blog"><div class="nav_menu_item">blog
+			</div></a><a href="/projects"><div class="nav_menu_item">projects
+			</div></a><a href="/articles"><div class="nav_menu_item">articles
+			</div></a><a href="/about"><div class="nav_menu_item">about</div></a>
+		</div>
+	<div class="nav_spacer"></div>
+</div>

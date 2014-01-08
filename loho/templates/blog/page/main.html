@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{# SEKIZAI START #}
+{% load sekizai_tags %}
+{% addtoblock "description" %}
+<title>{{ blog.title }}</title>
+    {% if blog.teaser %}
+<meta name="description" content="{{ blog.teaser }}">
+    {% else %}
+<meta name="description" content="{{ blog.text|truncatewords:80 }}">
+    {% endif %}
+{% endaddtoblock %}
+{# SEKIZAI END #}
+
+{# BLOG COMPONENTS #}
+{% include 'blog/component/blog_full.html' %}
+{% include 'blog/component/comments.html' %}
+
+{% endblock %}

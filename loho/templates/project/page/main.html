@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+{% block content %}{# SEKIZAI START #}
+{% load sekizai_tags %}
+{% addtoblock "description" %}
+<title>{{ project.title }}</title>
+    {% if project.teaser %}
+<meta name="description" content="{{ project.teaser }}">
+    {% else %}
+<meta name="description" content="{{ project.text|truncatewords:80 }}">
+    {% endif %}
+{% endaddtoblock %}
+
+<div class="project_title_container">
+<h2 class="project_title">{{project.title}}</h2>
+</div>
+{% if project.main_image %}
+<div class="project_main_image_wrapper">
+<div class="project_main_image" style="background-image:url({{project.main_image.url}})"></div>
+</div>
+{% endif %}
+<div class="project_text">
+{{ project.text|safe}}
+</div>
+<div class="project_text_spacer"></div>
+
+{% if showcaseimage_list %}
+<h2>Showcase Images</h2>
+	<div class="showcase_images">
+	{% for image in showcaseimage_list %}
+	<div class="showcase_image_container">
+	<img src="{{ image.url }}" />
+	</div>
+	{% endfor %}
+	</div>
+{% endif %}
+
+{% if showcasecode_list %}
+<h2>Showcase Images</h2>
+	<div class="showcase_images">
+	{% for image in showcaseimage_list %}
+	<div class="showcase_image_container">
+	<img src="{{ image.url }}" />
+	</div>
+	{% endfor %}
+	</div>
+{% endif %}
+
+{% if projectlog_list %}
+<h2>Project Logs</h2>
+	<div class="project_logs">
+	{% for log in projectlog_list %}
+	<div class="project_log_container">
+	<h3>{{ log.title }}</h3>
+	{{ log.timestamp }}
+	{{ log.text|safe}}
+	</div>
+	{% endfor %}
+	</div>
+{% endif %}
+
+
+{% endblock %}

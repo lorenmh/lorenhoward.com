@@ -1,0 +1,8 @@
+# Create your views here.
+from django.shortcuts import render
+from django.template.loader import get_template
+from django.template.context import RequestContext
+
+def about_index(request):
+	context = {'current_page':'about'}
+	return render(request,'about_index.html',context)

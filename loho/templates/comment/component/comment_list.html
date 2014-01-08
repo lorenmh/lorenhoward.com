@@ -1,0 +1,13 @@
+<h2 class="no_margin_bottom">Comments</h2>
+{% for comment in comment_list %}
+<div class="comment">
+<div class="avatar"></div>
+<div class="comment_fields">
+<div class="comment_name comment_field">{{comment.name}}</div>
+<div class="comment_text_box">
+<div class="triangle"></div>
+<div class="comment_subject comment_field">{{comment.subject}}</div>
+<div class="comment_text comment_field">{{comment.text | linebreaks}}</div></div>
+</div>
+</div>
+{% endfor %}
