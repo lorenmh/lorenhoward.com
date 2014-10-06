@@ -1,91 +1,14 @@
-{% load widget_tweaks static %}
-<div class="comment_list">
-{% include 'comment/component/comment_list.html' %}
-</div>
-<form id="comment_form">{% csrf_token %}
-{% for field in comment_form %}
-    <div class="field_wrap">
-        {# the django template renderer doesnt like spaces so this will be ugly #}
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'lorenhoward'; // required: replace example with your forum shortname
 
-        {% with field.name|capfirst as field_name %}
-        {% with "placeholder:"|add:field_name|add:':' as ph %}
-        
-        {% if field.name != 'text' %}
-            {{ field|attr:"class:form_field floatlabel"|attr:ph }}
-        {% else %}
-            {{ field|attr:"class:form_field" }}
-        {% endif %}
-
-        {% endwith %}
-        {% endwith %}
-    </div>
-{% endfor %}
-<input id="form_submit" type="button" value="Submit" /><div class="form_loading hide"></div>
-</form>
-
-<script type="text/javascript" src="{% static 'base/js/floatlabels.js' %}">
-</script>
-
-<script>
-var load = $('.form_loading');
-
-$(document).ready(function(){
-    $('input.floatlabel').floatlabel();
-});
-
-$('input#form_submit').click( function() {
-    load.toggleClass('hide');
-
-    $.post( '/comment/blog/{{ blog.id }}/' , $('form#comment_form').serialize(), null, 'json')
-        .done(function(data){
-            clearForm();
-            load.toggleClass('hide');
-            updateList();
-        })
-        .fail(function(data){
-            load.toggleClass('hide');
-            error(data.responseJSON);
-        })
-
-} );
-
-function updateList(){
-    $.get('/comment/blog/{{ blog.url }}/list/', function( data ) {
-            $('.comment_list').html( data )
-        });
-}
-
-function error(result){
-    clearError();
-
-    for (key in result){
-        var current = $('#id_'+ key );
-        current.addClass("field_error");
-        var original = current.attr('placeholder');
-        var label = $('label[for=id_' + key + ']');
-        var new_label = original + '&nbsp;<span class="error_span">' + result[key] + '</span>'
-        label.html(new_label)
-    }
-}
-
-function clearForm(){
-    $('.form_field').val(undefined);
-    clearError();
-
-}
-
-function clearError(){
-    $('.form_field').removeClass('field_error');
-    
-    var objects = $('input.floatlabel');
-
-    for (i = 0; i < objects.length; i++){
-        var item = $(objects[i]);
-        var name = $(item).attr('name');
-        var original = $(item).attr('placeholder');
-        var label = $('label[for=id_' + name + ']');
-        label.html(original);
-    }
-
-}
-</script>
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>

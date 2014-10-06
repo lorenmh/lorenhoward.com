@@ -8,6 +8,7 @@
 <!-- Tiny MCE -->
 <script type="text/javascript" src="/static/tinymce/tinymce.min.js"></script>
 
+{% verbatim %}
 <script type="text/javascript">
 tinymce.init({
         selector: "textarea",
@@ -38,14 +39,16 @@ tinymce.init({
                 {title: 'Table styles'},
                 {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
         ],
-
+        formats: {
+            pre: {inline:'pre', 'classes': 'prettyprint'}
+        },
         templates: [
                 {title: 'Test template 1', content: 'Test 1'},
                 {title: 'Test template 2', content: 'Test 2'}
         ]
 });
-
 </script>
+{% endverbatim %}
 <!-- End Tiny MCE -->
 {% endblock %}
 
