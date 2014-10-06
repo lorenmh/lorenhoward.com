@@ -1,7 +1,6 @@
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
 
-
 deactivate () {
     unset pydoc
 
@@ -40,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/lorenmh/lorenhoward.com/env"
+VIRTUAL_ENV="/Users/loren/dev/loho/lorenhoward.com/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

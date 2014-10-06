@@ -19,6 +19,19 @@ li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 { list-style-type: none }
 /* Alternate shading for lines */
 li.L1,li.L3,li.L5,li.L7,li.L9 { }
 
+body {
+    -webkit-animation-delay: 0.1s;
+    -webkit-animation-name: fontfix;
+    -webkit-animation-duration: 0.1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes fontfix {
+    from { opacity: 1; }
+    to   { opacity: 1; }
+}
+
 @media print {
   pre.prettyprint { padding: 20px; background-color: none }
   pre .str, code .str { color: #060 }
@@ -36,7 +49,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 *{
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
-	font-family:'Noto sans', sans-serif;
+	font-family:'Noto sans';
 
 }
 
@@ -426,8 +439,8 @@ a.blog_link:hover{
 }
 
 .list_blog_text:first-line, .full_blog_text:first-line {
-	font-weight:700;
-	font-size:18px;
+	font-weight: 700;
+	font-size: 18px;
 }
 
 .blog_timestamp{

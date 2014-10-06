@@ -1,1 +1,1 @@
-/home/lorenmh/Python27/lib/python2.7/stat.py
+/usr/local/Cellar/python/2.7.6_1/Frameworks/Python.framework/Versions/2.7/lib/python2.7/stat.py

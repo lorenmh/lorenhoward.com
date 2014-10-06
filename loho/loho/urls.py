@@ -46,7 +46,7 @@ urlpatterns = patterns('',
      {'document_root': '/home/lorenmh/lorenhoward.com/loho/static'}),
 
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-     {'document_root': '/home/lorenmh/lorenhoward.com/loho/media'}),
+     {'document_root': settings.MEDIA_ROOT}),
 
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/base/img/favicon.ico'), name='favicon.ico'),
 )
